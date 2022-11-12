@@ -54,7 +54,6 @@
                 }
                 cout << Max << '\n' ; 
             }
-
         }    
     }
     ```
@@ -86,7 +85,6 @@
                 else break ; 
             }
             int jL = j.size() , jC = -1 ; 
-
             for(i ; i < q.size() ; i++){
                 jC++;
                 if(j[jC] != q[i]){
@@ -94,9 +92,7 @@
                     cout << "No\n";
                     break;
                 }
-
                 if(jC >= jL-1) jC=-1;
-
             }
             if(judge) cout << "Yes\n";
         }
