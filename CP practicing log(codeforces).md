@@ -1,4 +1,4 @@
-# CP practicing dialog (codeforces) 
+# CP practicing log (codeforces) 
 ## first time (2022/11/06): 9:30pm ~ 11:30pm
 * target : 1000~1100 (solved)
 * contest 1574 problem B -> Combinatorics Homework (1100)
