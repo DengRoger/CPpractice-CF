@@ -1,16 +1,17 @@
 # Algorithm 
+
+[![hackmd-github-sync-badge](https://hackmd.io/kImG7w0vRJOIOhv2DBA6xQ/badge)](https://hackmd.io/kImG7w0vRJOIOhv2DBA6xQ)
+
 - [segment tree](#segmentTree)
     * 前言
     * segTree基本結構
         * StructSEG
         * query
         * update node
-    * lazy tag
-        * lazy tag code
+        * lazy tag
     * 動態開點
-    * 特殊優化
-        * Sparse Table 
-            * code (Sparse Table) 
+        
+- [BIT](#BIT)
 
 - [convex Hull](#convexHull)
 
@@ -29,13 +30,13 @@
         我們知道min(n[0] ~ n[0])=1，那我們可由min(n[0] ~ n[0])推測 min(n[0] ~ n[1]) = 1
         所以只要是相鄰的格子都只需要O(1)時間複雜度 去獲得區間最小值。
         ![](https://i.imgur.com/8Vw9tkh.png)
-        各位有發現這時間複雜度變低很多嗎，其實線段樹也是相同的概念做出來的！
-        但這次是把DP表改成一棵樹
+        
+        其實線段樹的精髓也在記錄，但這次是把DP表改成一棵樹
 * segment tree 結構：
     ![](https://i.imgur.com/YuEqJ4I.png)
     *   原理(StructSEG)
         由[0,5]做二元樹把他們的區間分開，然後在遞迴回來的時候去紀錄value
-        建樹時間複雜度為 O(n*log(n)) , 獲取區間為 O(log(n)) #每次二分搜去找點。
+        建樹時間複雜度為 O(n*log(n)) , 獲取區間為 O(log(n))
         *   Struct segTree code timeComplexity = n*log(n) 
         ```c++
         void StructSEG(int l , int r , ll node){
@@ -79,25 +80,20 @@
             } 
         }
         ```
-    * lazy tag 
-      簡介：即使updateNode 也不需要即時全部走過 除非你要走這條路徑時才會將node update掉
-*   特殊優化
-    *   提要
-        **不知道看到這邊 有沒有人發現 當cases = n^2 , 但是只有n個點得時候 DP的解法比較快
+        * lazy tag 
+          簡介：即使updateNode 也不需要即時全部走過 除非你要走這條路徑時才會將node更新
+
+        **當cases = 點^2 , DP的解法會快一些
         線段樹建樹要O(nlogn) + 找點 O(n^2(log(n))) 但DP只要 建表O(n^2) + 找對O(n^2)
         所以可以加一個前置判斷 當 尋找次數 > 點的個數^2 就直接改用DP來做優化。**
-        但應該幾乎沒有題目會出這種case , 因為他給的空間要超過 x 
+        但不太可能拿來優化 , 除非空間給超過 x 
         ```
         建表log(n) + 尋找((x^2)*log(n)) = ((x^2)+1)*log(x) 
         x => ((x^2)+1)*log(x) = 2*10^9 
         x = 14450 
         ```
-        所以如果他是 2D DP表 記憶體空間必須給超過208802500 才有可能 基本上可以斷定他在競賽中不可優化了
-        但有個資料結構剛好可以補全這部分的問題 : Sparse Table (感謝louisfghbvc的建議xD)
+        記憶體空間必須給超過208802500 ，基本上可以斷定他在競賽中不可優化了
 
-    *   Sparse Table
-        <preprocess , query , update an element>
-        稀疏表 <O(nlgn) , O(1)  , O(nlgn)>
-        線段樹 <O(n)    , O(lgn), O(lgn) >
+<h2 id="BIT">BIT</h2>
 
 <h2 id="convexHull">convexHull</h2>
