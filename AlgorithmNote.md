@@ -62,7 +62,7 @@
         }
         ```
     * updateNode
-        * 更新節點 timeComplexity = log(n) 
+        * 更新節點 timeComplexity = log(n)
         * code 
         ```c++
         void updateNode(int idx , int val , int l , int r , int node){
