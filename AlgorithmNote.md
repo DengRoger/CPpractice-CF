@@ -2,10 +2,11 @@
 - [segment tree](#segmentTree)
     * 前言
     * segTree基本結構
-        * Struct segTree code 
+        * StructSEG
         * query
+        * update node
     * lazy tag
-        * lazy tag code  
+        * lazy tag code
     * 動態開點
     * 特殊優化
         * Sparse Table 
@@ -32,34 +33,54 @@
         但這次是把DP表改成一棵樹
 * segment tree 結構：
     ![](https://i.imgur.com/YuEqJ4I.png)
-    *   原理
+    *   原理(StructSEG)
         由[0,5]做二元樹把他們的區間分開，然後在遞迴回來的時候去紀錄value
         建樹時間複雜度為 O(n*log(n)) , 獲取區間為 O(log(n)) #每次二分搜去找點。
-    *   Struct segTree code 
-    ```c++
-    void StructSEG(int l , int r , ll node){
-        if(l==r) seg[node] = v[r] ; 
-        else{
-            int mid = (l+r) >> 1 , tmp = node << 1;
-            StructSEG(l,mid,tmp) ; 
-            StructSEG(mid+1,r,tmp+1) ;
-            seg[node] = seg[tmp] + seg[tmp+1] ; 
+        *   Struct segTree code timeComplexity = n*log(n) 
+        ```c++
+        void StructSEG(int l , int r , ll node){
+            if(l==r) seg[node] = v[r] ; 
+            else{
+                int mid = (l+r) >> 1 , tmp = node << 1;
+                StructSEG(l,mid,tmp) ; 
+                StructSEG(mid+1,r,tmp+1) ;
+                seg[node] = seg[tmp] + seg[tmp+1] ; 
+            }
         }
-    }
-    ```
+        ```
     * query
-        * 每次去二分搜找區間 並組合 
-    * query code
-    ```c++
-    int query(int tL , int tR , int nL , int nR , int node){
-        int mid = (nL+nR)>>1 , ans = 0 ; 
-        if(tL <= nL && nR <= tR) return seg[node] ;
-        if(tL <= mid) ans += query(tL,tR,nL   ,mid,(node<<1)  );
-        if(tR  > mid) ans += query(tL,tR,mid+1,nR ,(node<<1)+1);  
-        return ans ; 
-    }
-    ```
-        
+        * 每次去二分搜找區間 並組合 timeComplexity = log(n) 
+        * query code
+        ```c++
+        int query(int tL , int tR , int nL , int nR , int node){
+            int mid = (nL+nR)>>1 , ans = 0 ; 
+            if(tL <= nL && nR <= tR) return seg[node] ;
+            if(tL <= mid) ans += query(tL,tR,nL   ,mid,(node<<1)  );
+            if(tR  > mid) ans += query(tL,tR,mid+1,nR ,(node<<1)+1);  
+            return ans ; 
+        }
+        ```
+    * updateNode
+        * 更新節點 timeComplexity = log(n) 
+        * code 
+        ```c++
+        void updateNode(int idx , int val , int l , int r , int node){
+            if(l == r){
+                seg[node] = val ;
+                v[idx] = val ; 
+            }
+            else{
+                int m = (l + r) >> 1 ; 
+                int leftNode  = (node << 1) ; 
+                int rightNode = (node << 1) + 1 ; 
+                if(idx <= m && idx >= l) updateNode(idx , val , l , m , leftNode ) ;
+                else updateNode(idx , val , m+1,r , rightNode ) ; 
+                seg[node] = seg[leftNode] + seg[rightNode] ; 
+            } 
+        }
+        ```
+    * lazy tag 
+      簡介：即使updateNode 也不需要即時全部走過 除非你要走這條路徑時才會將node update掉
 *   特殊優化
     *   提要
         **不知道看到這邊 有沒有人發現 當cases = n^2 , 但是只有n個點得時候 DP的解法比較快
@@ -78,5 +99,5 @@
         <preprocess , query , update an element>
         稀疏表 <O(nlgn) , O(1)  , O(nlgn)>
         線段樹 <O(n)    , O(lgn), O(lgn) >
-    
+
 <h2 id="convexHull">convexHull</h2>
