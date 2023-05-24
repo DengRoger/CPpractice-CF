@@ -1,5 +1,4 @@
 # Algorithm 
-
 [![hackmd-github-sync-badge](https://hackmd.io/kImG7w0vRJOIOhv2DBA6xQ/badge)](https://hackmd.io/kImG7w0vRJOIOhv2DBA6xQ)
 
 - [segment tree](#segmentTree)
@@ -36,8 +35,8 @@
     ![](https://i.imgur.com/YuEqJ4I.png)
     *   原理(StructSEG)
         由[0,5]做二元樹把他們的區間分開，然後在遞迴回來的時候去紀錄value
-        建樹時間複雜度為 O(n*log(n)) , 獲取區間為 O(log(n))
-        *   Struct segTree code timeComplexity = n*log(n) 
+        建樹時間複雜度為 O(n) , 獲取區間為 O(log(n))
+        *   Struct segTree code timeComplexity = O(n) 
         ```c++
         void StructSEG(int l , int r , ll node){
             if(l==r) seg[node] = v[r] ; 
@@ -93,6 +92,7 @@
         x = 14450 
         ```
         記憶體空間必須給超過208802500 ，基本上可以斷定他在競賽中不可優化了
+        ■ ︿ ■
 
 <h2 id="BIT">BIT</h2>
 
